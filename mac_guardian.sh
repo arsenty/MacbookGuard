@@ -1,25 +1,24 @@
+#!/bin/bash
 # reference https://gist.github.com/jay3sh/41d5f10293ba2aaa4019ec93766f4fdf
 
 COUNT=5
 
-checkNoSleep()
-{
-  if [[ ! -f `which NoSleepCtrl` ]]
-  then
-	echo "You do not have NoSleepCtrl"
-	echo "https://github.com/integralpro/nosleep/releases"   
-}
+#checkNoSleep()
+#{
+  #if [[ ! -f `which NoSleepCtrl` ]]
+  #then
+    #echo "You do not have NoSleepCtrl"
+    #echo "https://github.com/integralpro/nosleep/releases"   
+#}
 
 turnNoSleepOn()
 {
-  NoSleepCtrl -a -s 1
-  NoSleepCtrl -b -s 1
+    sudo pmset -b sleep 0; sudo pmset -b disablesleep 1
 }
 
 turnNoSleepOff()
 {
-  NoSleepCtrl -a -s 0
-  NoSleepCtrl -b -s 0
+    sudo pmset -b sleep 5; sudo pmset -b disablesleep 0
 }
 
 onCtrlC()
@@ -32,7 +31,7 @@ onCtrlC()
 
 main()
 {
-  checkNoSleep
+  #checkNoSleep
 
   turnNoSleepOn
 
@@ -47,12 +46,13 @@ main()
     # Turn volume to max value
     osascript -e "set Volume 10"
 
-    if [ $LID_CLOSED == "Yes" ] ]
+    if [ $LID_CLOSED == "Yes" ]
     then 
       let count=$COUNT
       while [ $count -gt 0 ]
       do
         say -v Fiona "Put down this laptop"
+        #echo "Put down this laptop"
         let count-=1
         sleep 1
       done
