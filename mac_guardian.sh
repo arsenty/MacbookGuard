@@ -43,11 +43,11 @@ main()
   do
     LID_CLOSED=`ioreg -r -k AppleClamshellState -d 4 | grep AppleClamshellState  | head -1 | cut -d = -f 2`
 
-    # Turn volume to max value
-    osascript -e "set Volume 10"
-
     if [ $LID_CLOSED == "Yes" ]
     then 
+      # Turn volume to max value
+      osascript -e "set Volume 10"
+
       let count=$COUNT
       while [ $count -gt 0 ]
       do
