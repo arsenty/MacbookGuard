@@ -38,12 +38,15 @@ main()
   trap onCtrlC SIGINT
 
   let INTRUSION_DETECTED=0
+  CABLE_STATUS=`pmset -g batt | awk -F "; " 'FNR == 2 {print $2}'`
 
   while true
   do
     LID_CLOSED=`ioreg -r -k AppleClamshellState -d 4 | grep AppleClamshellState  | head -1 | cut -d = -f 2`
+    CABLE_REMOVED=`pmset -g batt | awk -F "; " 'FNR == 2 {print $2}'`
 
-    if [ $LID_CLOSED == "Yes" ]
+    if [ $LID_CLOSED == "Yes" ] || [ $CABLE_STATUS != $CABLE_REMOVED ]
+
     then 
       # Turn volume to max value
       osascript -e "set Volume 10"
@@ -51,8 +54,8 @@ main()
       let count=$COUNT
       while [ $count -gt 0 ]
       do
-        say -v Fiona "Put down this laptop"
-        #echo "Put down this laptop"
+        # say -v Fiona "Put down this laptop"
+        echo "Put down this laptop"
         let count-=1
         sleep 1
       done
