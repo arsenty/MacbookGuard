@@ -54,8 +54,8 @@ main()
       let count=$COUNT
       while [ $count -gt 0 ]
       do
-        # say -v Fiona "Put down this laptop"
-        echo "Put down this laptop"
+        say -v Fiona "Put down this laptop"
+        #echo "Put down this laptop"
         let count-=1
         sleep 1
       done
