@@ -1,7 +1,7 @@
 #!/bin/bash
 # reference https://gist.github.com/jay3sh/41d5f10293ba2aaa4019ec93766f4fdf
 
-COUNT=5
+COUNT=1
 
 #checkNoSleep()
 #{
@@ -18,7 +18,7 @@ turnNoSleepOn()
 
 turnNoSleepOff()
 {
-    sudo pmset -b sleep 5; sudo pmset -b disablesleep 0
+    sudo pmset -b sleep 1; sudo pmset -b disablesleep 0
 }
 
 onCtrlC()
@@ -26,6 +26,7 @@ onCtrlC()
   turnNoSleepOff
   # Reset the volume to medium value
   osascript -e "set Volume 3"
+  killall afplay
   exit
 }
 
@@ -54,14 +55,20 @@ main()
       let count=$COUNT
       while [ $count -gt 0 ]
       do
-        say -v Fiona "Put down this laptop"
+        #say -v Fiona "Stop"
+        afplay "siren.wav"
         #echo "Put down this laptop"
         let count-=1
-        sleep 1
+        sleep 0
       done
       INTRUSION_DETECTED=1
     fi
-    sleep 1
+    sleep 0
+    #if [ $LID_CLOSED != "Yes" ] || [ $CABLE_STATUS == $CABLE_REMOVED ]
+    #then
+        #echo test
+    #sleep 0.5
+    #fi
   done
 }
 
